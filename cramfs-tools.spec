@@ -1,14 +1,15 @@
 Summary:	Set of tools which creates and checks cramfs filesytem
 Summary(pl.UTF-8):	Zestaw narzędzi do tworzenia i sprawdzania systemu plików cramfs
-Name:		cramfs
-Version:	1.1
+Name:		cramfs-tools
+Version:	2.1
 Release:	1
 License:	GPL
 Group:		Base/Utilities
-Source0:	http://dl.sourceforge.net/cramfs/%{name}-%{version}.tar.gz
-# Source0-md5:	d3912b9f7bf745fbfea68f6a9b9de30f
-URL:		http://sourceforge.net/projects/cramfs/
+Source0:	https://github.com/npitre/cramfs-tools/archive/refs/tags/v%{version}.tar.gz
+# Source0-md5:	d056f7a492a2e167a7d03234d1733aca
+URL:		https://github.com/npitre/cramfs-tools
 BuildRequires:	zlib-devel
+Obsoletes:	cramfs
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
@@ -25,13 +26,13 @@ Zestaw narzędzi do tworzenia i sprawdzania systemu plików cramfs.
 %build
 %{__make} \
 	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags}"
+	CFLAGS="%{rpmcppflags} %{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_sbindir}
 
-install mkcramfs cramfsck $RPM_BUILD_ROOT%{_sbindir}
+cp -p mkcramfs cramfsck $RPM_BUILD_ROOT%{_sbindir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
